@@ -3,8 +3,6 @@ package com.imd.ufrn.stocksystem.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.Where;
 
 import java.util.Objects;
@@ -16,26 +14,18 @@ public class ProductStockKeeping extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "id_product")
-    @Getter
-    @Setter
     private Product product;
 
     @ManyToOne
     @JoinColumn(name = "id_stock")
-    @Getter
-    @Setter
     private Stock stock;
 
     @Column(name = "quantity", nullable = false)
     @NotNull(message = "O campo quantidade não pode ser nulo")
-    @Getter
-    @Setter
     private int quantity;
 
     @Column(name = "location", nullable = false)
     @NotBlank(message = "O campo localização é obrigatório")
-    @Getter
-    @Setter
     private String location;
 
     @Override
