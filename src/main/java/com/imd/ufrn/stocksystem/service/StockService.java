@@ -4,8 +4,10 @@ import com.imd.ufrn.stocksystem.models.Stock;
 import com.imd.ufrn.stocksystem.models.enums.UF;
 import com.imd.ufrn.stocksystem.repository.StockRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ import java.util.Optional;
 @Service
 public class StockService {
 
-    final StockRepository stockRepository;
+    private final StockRepository stockRepository;
 
     public StockService(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
@@ -30,14 +32,20 @@ public class StockService {
     }
 
     public List<Stock> findStocksByStoreId(Long storeId) {
-        return stockRepository.findByStore_Id(storeId);
+
+        List<Stock> stocks = stockRepository.findByStore_Id(storeId);
+
+        if (stocks.isEmpty()) {
+            throw new IllegalStateException("Not found: Nenhum estoque encontrado para o ID da loja: " + storeId);
+        }
+        return stocks;
     }
 
     @Transactional
     public Stock save(Stock stockModel) {
-        boolean stockExistsByUfAndLocation = stockRepository.existsByUfAndLocation(stockModel.getUf(), stockModel.getLocation());
+        Optional<Stock> stockExistsByUfAndLocation = stockRepository.existsByUfAndLocation(stockModel.getUf(), stockModel.getLocation());
 
-        if(stockExistsByUfAndLocation){
+        if(stockExistsByUfAndLocation.isEmpty()){
             throw new IllegalStateException("Conflict: there is already a stock with this UF and Location");
         }
         return stockRepository.save(stockModel);
@@ -53,7 +61,7 @@ public class StockService {
             errosLog.add("Not found: Estoque não encontrado com o id: " + stock.getId());
         }
 
-        Optional<Stock> existByUfAndLocation = stockRepository.existsByUfAndLocationOptional(stock.getUf(), stock.getLocation());
+        Optional<Stock> existByUfAndLocation = stockRepository.existsByUfAndLocation(stock.getUf(), stock.getLocation());
         if( existByUfAndLocation.isPresent() && existByUfAndLocation.get().getId() != stock.getId()){
             errosLog.add("Conflict: já existe um estoque cadastrado com essa localização");
         }

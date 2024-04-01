@@ -14,7 +14,5 @@ public interface StockRepository extends JpaRepository<Stock,Long> {
 
     List<Stock> findByStore_Id(Long storeId);
 
-    Boolean existsByUfAndLocation(UF uf, String location);
-
-    Optional<Stock> existsByUfAndLocationOptional(UF uf, String location);
+    Optional<Stock> existsByUfAndLocation(UF uf, String location);
 }

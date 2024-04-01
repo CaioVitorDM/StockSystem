@@ -58,21 +58,23 @@ public class StockController {
     }
 
     @GetMapping("/store/{storeId}")
-    public ResponseEntity<List<Stock>> findStocksByStoreId(@PathVariable Long storeId) {
-        List<Stock> stocks = stockService.findStocksByStoreId(storeId);
-        if (stocks.isEmpty()) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Object> findStocksByStoreId(@PathVariable(value = "storeId") Long storeId) {
+        List<Stock> stocks;
+        try {
+            stocks = stockService.findStocksByStoreId(storeId);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        return ResponseEntity.ok(stocks);
+        return ResponseEntity.status(HttpStatus.OK).body(stocks);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getById(@PathVariable(value = "id") Long id){
-        Optional<Stock> livroOptional = stockService.findById(id);
-        if(livroOptional.isEmpty()){
+        Optional<Stock> stockOptional = stockService.findById(id);
+        if(stockOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado.");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(livroOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(stockOptional.get());
     }
 
     @GetMapping("/listAll")
