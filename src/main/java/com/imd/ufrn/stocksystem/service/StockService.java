@@ -33,29 +33,6 @@ public class StockService {
         return stockRepository.findByStore_Id(storeId);
     }
 
-    public boolean existsStockWithUfAndLocation(UF uf, String location) {
-        return stockRepository.existsByUfAndLocation(uf, location);
-    }
-
-
-    @Transactional
-    public Stock delete(Long id) {
-        ArrayList<String> errosLog = new ArrayList<>();
-
-        Optional<Stock> stockById = stockRepository.findById(id);
-
-        if(stockById.isEmpty()){
-            errosLog.add("Not found: Estoque não encontrado com o id: " + id );
-        }
-
-        if(!errosLog.isEmpty()){
-            throw new IllegalStateException(String.join("\n", errosLog));
-        }
-
-        stockById.get().setActive(false);
-        return stockRepository.save(stockById.get());
-    }
-
     @Transactional
     public Stock save(Stock stockModel) {
         boolean stockExistsByUfAndLocation = stockRepository.existsByUfAndLocation(stockModel.getUf(), stockModel.getLocation());
@@ -86,5 +63,23 @@ public class StockService {
         }
 
         return stockRepository.save(stock);
+    }
+
+    @Transactional
+    public Stock delete(Long id) {
+        ArrayList<String> errosLog = new ArrayList<>();
+
+        Optional<Stock> stockById = stockRepository.findById(id);
+
+        if(stockById.isEmpty()){
+            errosLog.add("Not found: Estoque não encontrado com o id: " + id );
+        }
+
+        if(!errosLog.isEmpty()){
+            throw new IllegalStateException(String.join("\n", errosLog));
+        }
+
+        stockById.get().setActive(false);
+        return stockRepository.save(stockById.get());
     }
 }
