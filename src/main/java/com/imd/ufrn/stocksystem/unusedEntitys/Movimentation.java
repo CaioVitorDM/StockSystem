@@ -1,13 +1,13 @@
-package com.imd.ufrn.stocksystem.models;
+package com.imd.ufrn.stocksystem.unusedEntitys;
 
-import com.imd.ufrn.stocksystem.models.enums.MovimenationType;
+import com.imd.ufrn.stocksystem.models.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
 @Table(name = "movimentations")
-public class Movimentation extends BaseEntity{
+public class Movimentation extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_productSK", referencedColumnName = "id")

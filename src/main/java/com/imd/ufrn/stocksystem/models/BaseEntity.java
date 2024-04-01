@@ -1,6 +1,8 @@
 package com.imd.ufrn.stocksystem.models;
 
+import com.imd.ufrn.stocksystem.models.enums.UF;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +29,14 @@ public abstract class BaseEntity implements Serializable {
 
     @Column(name = "active")
     protected boolean active = true;
+
+    @Column(name = "location")
+    private String location;
+
+    @Column(name = "uf", nullable = false)
+    @NotNull(message = "O campo UF é obrigatório")
+    @Enumerated(EnumType.STRING)
+    private UF uf;
 
 
     /**
@@ -93,4 +103,19 @@ public abstract class BaseEntity implements Serializable {
         return active;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public UF getUf() {
+        return uf;
+    }
+
+    public void setUf(UF uf) {
+        this.uf = uf;
+    }
 }

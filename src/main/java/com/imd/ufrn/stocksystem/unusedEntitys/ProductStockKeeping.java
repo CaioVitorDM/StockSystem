@@ -1,5 +1,7 @@
-package com.imd.ufrn.stocksystem.models;
+package com.imd.ufrn.stocksystem.unusedEntitys;
 
+import com.imd.ufrn.stocksystem.models.BaseEntity;
+import com.imd.ufrn.stocksystem.models.Stock;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +12,7 @@ import java.util.Objects;
 @Entity
 @Table
 @Where(clause = "active = true")
-public class ProductStockKeeping extends BaseEntity{
+public class ProductStockKeeping extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_product")

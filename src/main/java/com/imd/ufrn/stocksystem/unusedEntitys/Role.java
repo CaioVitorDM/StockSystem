@@ -1,4 +1,4 @@
-package com.imd.ufrn.stocksystem.models.enums;
+package com.imd.ufrn.stocksystem.unusedEntitys;
 
 public enum Role {
 
