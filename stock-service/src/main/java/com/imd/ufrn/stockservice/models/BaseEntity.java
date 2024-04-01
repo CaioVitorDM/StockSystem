@@ -1,12 +1,16 @@
 package com.imd.ufrn.stockservice.models;
 
+import com.imd.ufrn.stockservice.models.enums.UF;
 import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -32,6 +36,14 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "active")
     protected boolean active = true;
 
+    @Column(name = "location")
+    private String location;
+
+    @Column(name = "uf", nullable = false)
+    @NotNull(message = "O campo UF é obrigatório")
+    @Enumerated(EnumType.STRING)
+    private UF uf;
+
 
     /**
      * Defines the creation time before persisting the object on the database.
@@ -51,18 +63,34 @@ public abstract class BaseEntity implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        BaseEntity that = (BaseEntity) o;
-        return active == that.active && Objects.equals(id, that.id) && Objects.equals(createdAt, that.createdAt)
-                && Objects.equals(updatedAt, that.updatedAt);
+        if (this == o) return true;
+        if (!(o instanceof BaseEntity that)) return false;
+        return active == that.active && Objects.equals(id, that.id) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(location, that.location) && uf == that.uf;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createdAt, updatedAt, active);
+        return Objects.hash(id, createdAt, updatedAt, active, location, uf);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public UF getUf() {
+        return uf;
+    }
+
+    public void setUf(UF uf) {
+        this.uf = uf;
     }
 
     public long getId() {

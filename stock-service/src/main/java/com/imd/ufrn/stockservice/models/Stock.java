@@ -1,15 +1,10 @@
 package com.imd.ufrn.stockservice.models;
 
-import com.imd.ufrn.stockservice.models.enums.UF;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.Where;
-import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
@@ -22,13 +17,22 @@ public class Stock extends BaseEntity{
     @JoinColumn(name = "id_store")
     private Store store;
 
-    @Column(name = "location")
-    private String location;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (!super.equals(o))
+            return false;
+        Stock stock = (Stock) o;
+        return Objects.equals(store, stock.store);
+    }
 
-    @Column(name = "uf", nullable = false)
-    @NotNull(message = "O campo UF é obrigatório")
-    @Enumerated(EnumType.STRING)
-    private UF uf;
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), store);
+    }
 
 
     public Store getStore() {
@@ -39,19 +43,4 @@ public class Stock extends BaseEntity{
         this.store = store;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public UF getUf() {
-        return uf;
-    }
-
-    public void setUf(UF uf) {
-        this.uf = uf;
-    }
 }

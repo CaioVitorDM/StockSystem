@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/stocks") // Define a rota base para este controlador
+@RequestMapping("/api/stocks")
 public class StockController {
 
     private final StockService stockService;

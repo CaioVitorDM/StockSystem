@@ -1,10 +1,7 @@
 package com.imd.ufrn.stockservice.models;
 
-import com.imd.ufrn.stockservice.models.enums.UF;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.Where;
@@ -20,18 +17,29 @@ public class Store extends BaseEntity {
     @NotBlank(message = "O campo nome é obrigatório")
     private String name;
 
-    @Column(name = "location", nullable = false)
-    @NotBlank(message = "O campo localização é obrigatório")
-    private String location;
-
     @Column(name = "cnpj", nullable = false, unique = true)
     @NotBlank(message = "O campo cnpj é obrigatório")
     private String cnpj;
 
-    @Column(name = "uf", nullable = false)
-    @NotBlank(message = "O campo UF é obrigatório")
-    @Enumerated(EnumType.STRING)
-    private UF uf;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (!super.equals(o))
+            return false;
+        Store store = (Store) o;
+        return Objects.equals(name, store.name)
+                && Objects.equals(cnpj, store.cnpj);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name, cnpj);
+    }
 
     public String getName() {
         return name;
@@ -39,14 +47,6 @@ public class Store extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public String getCnpj() {
@@ -57,11 +57,4 @@ public class Store extends BaseEntity {
         this.cnpj = cnpj;
     }
 
-    public UF getUf() {
-        return uf;
-    }
-
-    public void setUf(UF uf) {
-        this.uf = uf;
-    }
 }
