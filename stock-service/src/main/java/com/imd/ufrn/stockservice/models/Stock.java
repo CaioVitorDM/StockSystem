@@ -3,6 +3,8 @@ package com.imd.ufrn.stockservice.models;
 import com.imd.ufrn.stockservice.models.enums.UF;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -25,6 +27,7 @@ public class Stock extends BaseEntity{
 
     @Column(name = "uf", nullable = false)
     @NotNull(message = "O campo UF é obrigatório")
+    @Enumerated(EnumType.STRING)
     private UF uf;
 
 

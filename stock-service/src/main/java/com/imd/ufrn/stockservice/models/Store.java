@@ -24,7 +24,7 @@ public class Store extends BaseEntity {
     @NotBlank(message = "O campo localização é obrigatório")
     private String location;
 
-    @Column(name = "cnpj", nullable = false)
+    @Column(name = "cnpj", nullable = false, unique = true)
     @NotBlank(message = "O campo cnpj é obrigatório")
     private String cnpj;
 
