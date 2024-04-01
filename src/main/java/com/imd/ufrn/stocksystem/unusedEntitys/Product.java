@@ -1,5 +1,6 @@
-package com.imd.ufrn.stocksystem.models;
+package com.imd.ufrn.stocksystem.unusedEntitys;
 
+import com.imd.ufrn.stocksystem.models.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "products")
 @Where(clause = "active = true")
-public class Product extends BaseEntity{
+public class Product extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     @NotBlank(message = "O campo nome é obrigatório")

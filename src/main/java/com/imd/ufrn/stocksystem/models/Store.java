@@ -18,18 +18,10 @@ public class Store extends BaseEntity {
     @NotBlank(message = "O campo nome é obrigatório")
     private String name;
 
-    @Column(name = "location", nullable = false)
-    @NotBlank(message = "O campo localização é obrigatório")
-    private String location;
-
     @Column(name = "cnpj", nullable = false)
     @NotBlank(message = "O campo cnpj é obrigatório")
     private String cnpj;
 
-    @Column(name = "uf", nullable = false)
-    @NotBlank(message = "O campo UF é obrigatório")
-    @Enumerated(EnumType.STRING)
-    private UF uf;
 
     @Override
     public boolean equals(Object o) {
@@ -41,12 +33,12 @@ public class Store extends BaseEntity {
             return false;
         Store store = (Store) o;
         return Objects.equals(name, store.name)
-                && Objects.equals(location, store.location) && Objects.equals(cnpj, store.cnpj);
+                && Objects.equals(cnpj, store.cnpj);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, location, cnpj);
+        return Objects.hash(super.hashCode(), name, cnpj);
     }
 
     public String getName() {
@@ -57,14 +49,6 @@ public class Store extends BaseEntity {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public String getCnpj() {
         return cnpj;
     }
@@ -73,11 +57,4 @@ public class Store extends BaseEntity {
         this.cnpj = cnpj;
     }
 
-    public UF getUf() {
-        return uf;
-    }
-
-    public void setUf(UF uf) {
-        this.uf = uf;
-    }
 }
