@@ -1,7 +1,6 @@
 package com.imd.ufrn.stocksystem.unusedEntitys;
 
 import com.imd.ufrn.stocksystem.models.BaseEntity;
-import com.imd.ufrn.stocksystem.models.enums.MovimenationType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
